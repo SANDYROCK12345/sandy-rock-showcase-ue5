@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowDown, Monitor, Bookmark, User, Mail, ArrowRight } from 'lucide-react';
@@ -9,6 +8,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ProjectCard from '@/components/ProjectCard';
 import SkillBar from '@/components/SkillBar';
 import ContactForm from '@/components/ContactForm';
+import TypewriterText from '@/components/TypewriterText';
 
 // Placeholder for profile image
 const profileImage = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=500&fit=crop&q=80";
@@ -66,7 +66,10 @@ const Index = () => {
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
+      ref.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   };
 
@@ -91,21 +94,49 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto px-4 md:px-6 z-10">
-          <AnimatedSection animation="fade-in-up" className="max-w-4xl mx-auto text-center">
+          <AnimatedSection animation="fade-in-up" className="max-w-4xl mx-auto text-center" duration={800}>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6">
-              Sandy <span className="text-ue-blue">Rock</span>
+              <TypewriterText 
+                text="Sandy" 
+                className="inline-block" 
+                speed={80} 
+              />
+              <span className="text-ue-blue"> 
+                <TypewriterText 
+                  text="Rock" 
+                  className="inline-block" 
+                  speed={80} 
+                  delay={500} 
+                />
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-ue-gray mb-8">
-              UE5 Game Developer crafting immersive digital experiences
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <TypewriterText
+              text="UE5 Game Developer crafting immersive digital experiences"
+              className="text-xl md:text-2xl text-ue-gray mb-8"
+              speed={30}
+              delay={1200}
+              onComplete={() => {
+                // Animation for buttons can be triggered after text finishes
+                const buttons = document.querySelectorAll('.hero-button');
+                buttons.forEach((btn, index) => {
+                  (btn as HTMLElement).style.opacity = '1';
+                  (btn as HTMLElement).style.transform = 'translateY(0)';
+                });
+              }}
+            />
+            <div className="flex flex-wrap justify-center gap-4 mt-8">
               <button 
                 onClick={() => scrollToSection(aboutRef)} 
-                className="btn-primary"
+                className="btn-primary hero-button opacity-0 translate-y-4 transition-all duration-500 delay-200"
+                style={{ transitionDelay: '1800ms' }}
               >
                 Discover More
               </button>
-              <Link to="/contact" className="px-6 py-3 border border-ue-blue/50 text-white hover:border-ue-blue rounded-md transition-all duration-300 hover:-translate-y-1">
+              <Link 
+                to="/contact" 
+                className="px-6 py-3 border border-ue-blue/50 text-white hover:border-ue-blue rounded-md transition-all duration-300 hover:-translate-y-1 hero-button opacity-0 translate-y-4"
+                style={{ transitionDelay: '2000ms' }}
+              >
                 Get In Touch
               </Link>
             </div>
@@ -125,11 +156,19 @@ const Index = () => {
       {/* About Section */}
       <section ref={aboutRef} className="py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <AnimatedSection animation="fade-in-up" className="text-center mb-16">
-            <h2 className="section-title">About <span className="text-ue-blue">Me</span></h2>
-            <p className="section-subtitle">
-              Passionate UE5 developer with a focus on creating cutting-edge gaming experiences
-            </p>
+          <AnimatedSection animation="fade-in-up" className="text-center mb-16" duration={800}>
+            <h2 className="section-title">
+              <TypewriterText text="About " className="inline-block" delay={200} />
+              <span className="text-ue-blue">
+                <TypewriterText text="Me" className="inline-block" delay={600} />
+              </span>
+            </h2>
+            <TypewriterText
+              text="Passionate UE5 developer with a focus on creating cutting-edge gaming experiences"
+              className="section-subtitle"
+              speed={20}
+              delay={1000}
+            />
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
