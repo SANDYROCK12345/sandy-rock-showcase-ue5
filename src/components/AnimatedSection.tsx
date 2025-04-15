@@ -24,10 +24,10 @@ const AnimatedSection = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
+        // Update visibility based on intersection state
+        setIsVisible(entry.isIntersecting);
+        
+        // We no longer unobserve the element, so animations can rerun
       },
       {
         root: null,
@@ -61,7 +61,7 @@ const AnimatedSection = ({
               ? 'translate3d(30px, 0, 0)' 
               : 'translate3d(0, 0, 0)',
     transition: `opacity ${duration}ms cubic-bezier(0.215, 0.61, 0.355, 1), transform ${duration}ms cubic-bezier(0.215, 0.61, 0.355, 1)`,
-    transitionDelay: `${delay}ms`,
+    transitionDelay: isVisible ? `${delay}ms` : '0ms', // Only apply delay when becoming visible
   };
 
   return (

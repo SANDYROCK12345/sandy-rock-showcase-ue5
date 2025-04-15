@@ -22,13 +22,29 @@ const TypewriterText = ({
   const [isTyping, setIsTyping] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
+  const typingTimerRef = useRef<number | null>(null);
+  const startTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+        setIsVisible(entry.isIntersecting);
+        
+        // Reset text when element leaves viewport
+        if (!entry.isIntersecting) {
+          setDisplayedText('');
+          setIsTyping(false);
+          
+          // Clear any active timers
+          if (startTimerRef.current) {
+            clearTimeout(startTimerRef.current);
+            startTimerRef.current = null;
+          }
+          
+          if (typingTimerRef.current) {
+            clearInterval(typingTimerRef.current);
+            typingTimerRef.current = null;
+          }
         }
       },
       {
@@ -46,35 +62,43 @@ const TypewriterText = ({
       if (elementRef.current) {
         observer.unobserve(elementRef.current);
       }
+      
+      // Clean up timers on unmount
+      if (startTimerRef.current) clearTimeout(startTimerRef.current);
+      if (typingTimerRef.current) clearInterval(typingTimerRef.current);
     };
   }, []);
 
   useEffect(() => {
     if (!isVisible) return;
-
-    let timer: number;
+    
+    // Clean up previous timers
+    if (startTimerRef.current) clearTimeout(startTimerRef.current);
+    if (typingTimerRef.current) clearInterval(typingTimerRef.current);
     
     // Initial delay
-    const startTimer = window.setTimeout(() => {
+    startTimerRef.current = window.setTimeout(() => {
       setIsTyping(true);
       let i = 0;
       
       // Start typing effect
-      const typingTimer = window.setInterval(() => {
+      typingTimerRef.current = window.setInterval(() => {
         if (i < text.length) {
           setDisplayedText(text.substring(0, i + 1));
           i++;
         } else {
-          clearInterval(typingTimer);
+          if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+          typingTimerRef.current = null;
           setIsTyping(false);
           if (onComplete) onComplete();
         }
       }, speed);
-      
-      return () => clearInterval(typingTimer);
     }, delay);
     
-    return () => clearTimeout(startTimer);
+    return () => {
+      if (startTimerRef.current) clearTimeout(startTimerRef.current);
+      if (typingTimerRef.current) clearInterval(typingTimerRef.current);
+    };
   }, [text, speed, delay, isVisible, onComplete]);
 
   return (
