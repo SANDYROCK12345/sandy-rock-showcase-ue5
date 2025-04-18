@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -116,8 +115,12 @@ export default {
 					}
 				},
 				'float': {
-					'0%, 100%': { transform: 'translateY(0)' },
-					'50%': { transform: 'translateY(-10px)' }
+					'0%, 100%': { 
+						transform: 'translateY(0)',
+					},
+					'50%': { 
+						transform: 'translateY(-20px)',
+					},
 				},
 				'particle-flow': {
 					'0%': { transform: 'translateY(0) translateX(0)' },
@@ -134,7 +137,7 @@ export default {
 				'fade-in-left': 'fade-in-left 0.5s ease-out',
 				'fade-in-right': 'fade-in-right 0.5s ease-out',
 				'pulse-glow': 'pulse-glow 2s infinite',
-				'float': 'float 4s ease-in-out infinite',
+				'float': 'float 6s ease-in-out infinite',
 				'particle-flow': 'particle-flow 3s ease-out infinite'
 			},
 			fontFamily: {

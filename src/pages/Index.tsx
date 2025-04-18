@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, Monitor, Bookmark, User, Mail, ArrowRight } from 'lucide-react';
+import { ArrowDown, Monitor, Bookmark, User, Mail, ArrowRight, Linkedin, Phone, MapPin } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
@@ -10,35 +10,35 @@ import SkillBar from '@/components/SkillBar';
 import ContactForm from '@/components/ContactForm';
 import TypewriterText from '@/components/TypewriterText';
 
-// Placeholder for profile image
-const profileImage = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=500&fit=crop&q=80";
+// Profile image
+const profileImage = "/lovable-uploads/dcc8f93d-d0c6-4c9d-a0a1-df68c363542b.png";
 
-// Placeholder projects data
+// Projects data
 const projects = [
   {
     id: 1,
-    title: "Dreamscape Adventure",
-    description: "A third-person adventure game with procedural world generation and advanced AI systems.",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "C++", "Blueprint"],
+    title: "JUNGLE GUARD",
+    description: "An Environment Showcase Animation demonstrating advanced environmental rendering and atmospheric effects in UE5.",
+    image: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=800&h=500&fit=crop&q=80",
+    technologies: ["UE5", "Environment Art", "Animation"],
     liveLink: "#",
     githubLink: "#"
   },
   {
     id: 2,
-    title: "Cyber Nexus",
-    description: "A fast-paced first-person shooter with destructible environments and realistic physics.",
+    title: "BLOOD SMELLS",
+    description: "An action RPG featuring hack and slash combat mechanics in a third-person perspective.",
     image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "C++", "Niagara"],
+    technologies: ["UE5", "C++", "Combat Systems"],
     liveLink: "#",
     githubLink: "#"
   },
   {
     id: 3,
-    title: "Natural Wonders",
-    description: "An open-world exploration game showcasing Unreal Engine 5's Nanite and Lumen technologies.",
-    image: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "Blueprint", "Nanite"],
+    title: "VOID CENTURY",
+    description: "An action-adventure 2D platformer game with unique art style and engaging storyline.",
+    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=500&fit=crop&q=80",
+    technologies: ["UE5", "2D", "Level Design"],
     liveLink: "#",
     githubLink: "#"
   },
@@ -87,7 +87,7 @@ const Index = () => {
             loop
             className="w-full h-full object-cover opacity-30"
           >
-            <source src="https://cdn.pixabay.com/vimeo/328940142/unreal-engine-23015.mp4?width=1280&hash=8f7e01de8349a6eb1d8d4ac59f48d8c2bff1cfee" type="video/mp4" />
+            <source src="https://youtu.be/NmPNsK30IXA?t=37" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ue-dark/70 to-ue-dark"></div>
@@ -95,6 +95,15 @@ const Index = () => {
 
         <div className="container mx-auto px-4 md:px-6 z-10">
           <AnimatedSection animation="fade-in-up" className="max-w-4xl mx-auto text-center" duration={800}>
+            <div className="relative w-48 h-48 mx-auto mb-8">
+              <img
+                src={profileImage}
+                alt="Sandy Rock"
+                className="rounded-full w-full h-full object-cover animate-float shadow-xl"
+              />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-b from-ue-blue/20 to-transparent opacity-50 animate-pulse-glow"></div>
+            </div>
+
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6">
               <TypewriterText 
                 text="Sandy" 
@@ -111,34 +120,29 @@ const Index = () => {
               </span>
             </h1>
             <TypewriterText
-              text="UE5 Game Developer crafting immersive digital experiences"
+              text="UE5 Game Developer | B.Tech CSE Student"
               className="text-xl md:text-2xl text-ue-gray mb-8"
               speed={30}
               delay={1200}
-              onComplete={() => {
-                // Animation for buttons can be triggered after text finishes
-                const buttons = document.querySelectorAll('.hero-button');
-                buttons.forEach((btn, index) => {
-                  (btn as HTMLElement).style.opacity = '1';
-                  (btn as HTMLElement).style.transform = 'translateY(0)';
-                });
-              }}
             />
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <button 
-                onClick={() => scrollToSection(aboutRef)} 
-                className="btn-primary hero-button opacity-0 translate-y-4 transition-all duration-500 delay-200"
-                style={{ transitionDelay: '1800ms' }}
-              >
-                Discover More
-              </button>
-              <Link 
-                to="/contact" 
-                className="px-6 py-3 border border-ue-blue/50 text-white hover:border-ue-blue rounded-md transition-all duration-300 hover:-translate-y-1 hero-button opacity-0 translate-y-4"
-                style={{ transitionDelay: '2000ms' }}
-              >
-                Get In Touch
-              </Link>
+
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
+              <a href="mailto:rocksandy9422@gmail.com" className="flex items-center gap-2 text-ue-gray hover:text-ue-blue transition-colors">
+                <Mail size={20} />
+                <span>rocksandy9422@gmail.com</span>
+              </a>
+              <a href="tel:8058994052" className="flex items-center gap-2 text-ue-gray hover:text-ue-blue transition-colors">
+                <Phone size={20} />
+                <span>+91 8058994052</span>
+              </a>
+              <a href="https://www.linkedin.com/in/sandy-rock-69705a328/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-ue-gray hover:text-ue-blue transition-colors">
+                <Linkedin size={20} />
+                <span>LinkedIn</span>
+              </a>
+              <div className="flex items-center gap-2 text-ue-gray">
+                <MapPin size={20} />
+                <span>Sikar, Rajasthan</span>
+              </div>
             </div>
           </AnimatedSection>
 
@@ -156,91 +160,44 @@ const Index = () => {
       {/* About Section */}
       <section ref={aboutRef} className="py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <AnimatedSection animation="fade-in-up" className="text-center mb-16" duration={800}>
-            <h2 className="section-title">
-              <TypewriterText text="About " className="inline-block" delay={200} />
-              <span className="text-ue-blue">
-                <TypewriterText text="Me" className="inline-block" delay={600} />
-              </span>
-            </h2>
-            <TypewriterText
-              text="Passionate UE5 developer with a focus on creating cutting-edge gaming experiences"
-              className="section-subtitle"
-              speed={20}
-              delay={1000}
-            />
+          <AnimatedSection animation="fade-in-up" className="text-center mb-16">
+            <h2 className="section-title">About <span className="text-ue-blue">Me</span></h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             <AnimatedSection animation="fade-in-left">
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-lg bg-gradient-to-r from-ue-blue/20 to-transparent blur-lg opacity-50"></div>
-                <img
-                  src={profileImage}
-                  alt="Sandy Rock"
-                  className="rounded-lg w-full h-auto relative z-10"
-                />
-                <div className="absolute -bottom-5 -right-5 w-32 h-32 bg-ue-blue/10 rounded-lg -z-10"></div>
+              <div className="glass-panel p-8 h-full">
+                <h3 className="text-2xl font-bold text-white mb-6">Education</h3>
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-ue-blue">B.Tech in Computer Science and Engineering</h4>
+                    <p className="text-white">Bhartiya Institute of Engineering and Technology - Sikar</p>
+                    <p className="text-ue-gray">Sept 2022 – June 2026</p>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-ue-blue">Higher Secondary Education</h4>
+                    <p className="text-white">Lord's International School - Sadulpur</p>
+                    <p className="text-ue-gray">10th (2020) and 12th (2022)</p>
+                  </div>
+                </div>
               </div>
             </AnimatedSection>
 
-            <AnimatedSection animation="fade-in-right" delay={200}>
-              <h3 className="text-3xl font-bold text-white mb-6">UE5 Game Developer</h3>
-              <p className="text-ue-gray mb-6">
-                I'm Sandy Rock, a professional game developer with extensive experience in Unreal Engine 5. 
-                I specialize in creating immersive gaming experiences with cutting-edge technology and 
-                innovative design solutions.
-              </p>
-              <p className="text-ue-gray mb-8">
-                My passion lies in pushing the boundaries of what's possible in real-time 3D environments, 
-                bringing virtual worlds to life with attention to detail and performance optimization.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                <div className="flex items-start gap-3">
-                  <div className="text-ue-blue mt-1">
-                    <User size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-medium">Experience</h4>
-                    <p className="text-ue-gray">7+ Years</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-ue-blue mt-1">
-                    <Monitor size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-medium">Completed Projects</h4>
-                    <p className="text-ue-gray">20+</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-ue-blue mt-1">
-                    <Bookmark size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-medium">Specialization</h4>
-                    <p className="text-ue-gray">UE5, C++, Blueprint</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-ue-blue mt-1">
-                    <Mail size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-medium">Contact</h4>
-                    <p className="text-ue-gray">contact@sandyrock.dev</p>
-                  </div>
-                </div>
+            <AnimatedSection animation="fade-in-right">
+              <div className="glass-panel p-8 h-full">
+                <h3 className="text-2xl font-bold text-white mb-6">Introduction</h3>
+                <p className="text-ue-gray mb-6">
+                  Dedicated game development student with a strong foundation in Unreal Engine 5 (UE5), seeking opportunities to
+                  enhance skills and gain practical experience. Demonstrated passion for learning and creativity, aiming to
+                  contribute effectively to innovative projects. Aspires to create original games that engage and inspire players.
+                </p>
+                <p className="text-ue-gray">
+                  Dynamic multimedia specialist proficient in video and photo editing, equipped with AI-driven image creation and
+                  audio production skills. Demonstrated ability to craft compelling scripts and develop innovative coding solutions,
+                  enhancing project deliverables. Committed to leveraging diverse competencies to contribute effectively within a
+                  creative team.
+                </p>
               </div>
-              
-              <button 
-                onClick={() => scrollToSection(projectsRef)} 
-                className="btn-primary"
-              >
-                View My Projects
-              </button>
             </AnimatedSection>
           </div>
         </div>
