@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -68,6 +69,16 @@ export default {
 					gray: '#8b949e',
 					light: '#58a6ff',
 					accent: '#3ac4ff'
+				},
+				rog: {
+					red: '#ff0029',
+					dark: '#131315',
+					darker: '#0a0a0c',
+					gray: '#8c8c8c',
+					light: '#f5f5f5',
+					cyan: '#39ebff',
+					purple: '#a355ff',
+					glow: 'rgba(255, 0, 41, 0.6)'
 				}
 			},
 			borderRadius: {
@@ -107,11 +118,11 @@ export default {
 				'pulse-glow': {
 					'0%, 100%': { 
 						opacity: '1',
-						boxShadow: '0 0 10px 2px rgba(88, 166, 255, 0.2)' 
+						boxShadow: '0 0 10px 2px var(--shadow-color, rgba(255, 0, 41, 0.4))' 
 					},
 					'50%': { 
 						opacity: '0.8',
-						boxShadow: '0 0 15px 4px rgba(88, 166, 255, 0.4)' 
+						boxShadow: '0 0 15px 4px var(--shadow-color, rgba(255, 0, 41, 0.6))' 
 					}
 				},
 				'float': {
@@ -126,6 +137,34 @@ export default {
 					'0%': { transform: 'translateY(0) translateX(0)' },
 					'50%': { transform: 'translateY(-20px) translateX(10px)' },
 					'100%': { transform: 'translateY(-40px) translateX(0)', opacity: '0' }
+				},
+				'glow-pulse': {
+					'0%, 100%': {
+						boxShadow: '0 0 5px rgba(255, 0, 41, 0.3), 0 0 10px rgba(255, 0, 41, 0.2), 0 0 15px rgba(255, 0, 41, 0.1)'
+					},
+					'50%': {
+						boxShadow: '0 0 10px rgba(255, 0, 41, 0.5), 0 0 20px rgba(255, 0, 41, 0.3), 0 0 30px rgba(255, 0, 41, 0.2)'
+					}
+				},
+				'text-glow': {
+					'0%, 100%': {
+						textShadow: '0 0 5px rgba(255, 0, 41, 0.5), 0 0 15px rgba(255, 0, 41, 0.3)'
+					},
+					'50%': {
+						textShadow: '0 0 10px rgba(255, 0, 41, 0.8), 0 0 25px rgba(255, 0, 41, 0.5)'
+					}
+				},
+				'flicker': {
+					'0%, 100%': { opacity: '1' },
+					'10%': { opacity: '0.9' },
+					'20%': { opacity: '1' },
+					'30%': { opacity: '0.9' },
+					'40%': { opacity: '1' },
+					'50%': { opacity: '0.95' },
+					'60%': { opacity: '1' },
+					'70%': { opacity: '0.9' },
+					'80%': { opacity: '1' },
+					'90%': { opacity: '0.95' }
 				}
 			},
 			animation: {
@@ -138,11 +177,15 @@ export default {
 				'fade-in-right': 'fade-in-right 0.5s ease-out',
 				'pulse-glow': 'pulse-glow 2s infinite',
 				'float': 'float 6s ease-in-out infinite',
-				'particle-flow': 'particle-flow 3s ease-out infinite'
+				'particle-flow': 'particle-flow 3s ease-out infinite',
+				'glow-pulse': 'glow-pulse 2s infinite',
+				'text-glow': 'text-glow 2s infinite',
+				'flicker': 'flicker 3s infinite'
 			},
 			fontFamily: {
 				inter: ['Inter', 'sans-serif'],
-				montserrat: ['Montserrat', 'sans-serif']
+				montserrat: ['Montserrat', 'sans-serif'],
+				rog: ['Montserrat', 'sans-serif'] // ROG typically uses a similar font to Montserrat
 			}
 		}
 	},
