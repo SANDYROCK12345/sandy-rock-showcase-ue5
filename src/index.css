@@ -9,42 +9,24 @@
   :root {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-
-    --primary: 240 60% 50%;
+    --primary: 142 72% 29%;
     --primary-foreground: 0 0% 98%;
-
     --secondary: 240 5% 10%;
     --secondary-foreground: 0 0% 98%;
-
     --muted: 240 5% 15%;
     --muted-foreground: 240 5% 65%;
-
     --accent: 169 100% 70%;
     --accent-foreground: 240 10% 3.9%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 5% 15%;
     --input: 240 5% 15%;
     --ring: 142 72% 29%;
-
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -55,8 +37,9 @@
 
   body {
     @apply bg-background text-foreground font-poppins overflow-x-hidden;
-    background-image: radial-gradient(circle at 20% 20%, rgba(29, 78, 216, 0.15) 0%, transparent 70%), 
-                      radial-gradient(circle at 80% 80%, rgba(192, 38, 211, 0.15) 0%, transparent 70%);
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(29, 78, 216, 0.15) 0%, transparent 70%),
+      radial-gradient(circle at 80% 80%, rgba(192, 38, 211, 0.15) 0%, transparent 70%);
   }
 
   ::-webkit-scrollbar {
@@ -107,87 +90,47 @@
   .btn-primary {
     @apply px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium uppercase tracking-wider rounded-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50;
   }
+}
 
-  .card-3d {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-  }
+@keyframes glowPulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.8; }
+}
 
-  .card-3d-content {
-    transform: translateZ(20px);
-    transform-style: preserve-3d;
-  }
+@keyframes floatAnimation {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
 
-  .hover-float {
-    @apply transition-transform duration-300 hover:-translate-y-2;
-  }
+@keyframes rotateAnimation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-accent;
-  }
+@keyframes breatheAnimation {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
 
-  .animated-border {
-    @apply relative rounded-lg p-1;
-  }
+@keyframes shimmerAnimation {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
 
-  .animated-border::before {
-    content: '';
-    @apply absolute inset-0 rounded-lg;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #8b5cf6, #3b82f6);
-    background-size: 400% 400%;
-    animation: borderAnimation 8s linear infinite;
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
+.floating {
+  animation: floatAnimation 6s ease-in-out infinite;
+}
 
-  @keyframes borderAnimation {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 400% 50%; }
-  }
+.rotating {
+  animation: rotateAnimation 10s linear infinite;
+}
 
-  @keyframes glowPulse {
-    0% { opacity: 0.5; }
-    100% { opacity: 0.8; }
-  }
+.breathing {
+  animation: breatheAnimation 4s ease-in-out infinite;
+}
 
-  @keyframes floatAnimation {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  @keyframes rotateAnimation {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @keyframes breatheAnimation {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  @keyframes shimmerAnimation {
-    0% { background-position: -100% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  .floating {
-    animation: floatAnimation 6s ease-in-out infinite;
-  }
-
-  .rotating {
-    animation: rotateAnimation 10s linear infinite;
-  }
-
-  .breathing {
-    animation: breatheAnimation 4s ease-in-out infinite;
-  }
-
-  .shimmer {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    background-size: 200% 100%;
-    animation: shimmerAnimation 2s infinite;
-  }
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmerAnimation 2s infinite;
 }

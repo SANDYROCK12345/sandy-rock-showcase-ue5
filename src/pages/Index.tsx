@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -6,7 +5,7 @@ import {
   Phone, Linkedin, Code, Brush, Brain, Monitor, Zap,
   SlidersHorizontal, BookOpen, Rocket
 } from 'lucide-react';
-import { User } from '@/components/icons/User'; // Import the User component
+import { User } from '@/components/icons/User';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -16,11 +15,10 @@ import AnimatedProjectCard from '@/components/AnimatedProjectCard';
 import SkillItem from '@/components/SkillItem';
 import ContactForm from '@/components/ContactForm';
 import Card3D from '@/components/Card3D';
+import ParticleBackground from '@/components/ParticleBackground';
 
-// Profile image
 const profileImage = "/lovable-uploads/dcc8f93d-d0c6-4c9d-a0a1-df68c363542b.png";
 
-// Projects data
 const projects = [
   {
     id: 1,
@@ -51,7 +49,6 @@ const projects = [
   },
 ];
 
-// Skills data with icons
 const skills = [
   { name: "Unreal Engine 5", level: 95, icon: <Gamepad size={20} /> },
   { name: "C++", level: 90, icon: <Code size={20} /> },
@@ -84,6 +81,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
       <HeroParticles />
+      <ParticleBackground />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-24">
@@ -100,7 +98,6 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/80 to-background"></div>
         </div>
 
-        {/* Tech decoration elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 -left-24 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 -right-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
@@ -164,17 +161,13 @@ const Index = () => {
 
             <AnimatedSection animation="fade-in-left" className="lg:w-1/2" duration={800} delay={300}>
               <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
-                {/* Decorative rings */}
                 <div className="absolute inset-0 border-2 border-dashed border-primary/30 rounded-full animate-slow-spin"></div>
                 <div className="absolute inset-8 border border-accent/20 rounded-full animate-slow-spin" style={{ animationDirection: 'reverse' }}></div>
                 
-                {/* Avatar container */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative w-48 h-48 md:w-64 md:h-64">
-                    {/* Glow effect */}
                     <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-transparent to-accent/20 animate-pulse-glow blur-md"></div>
                     
-                    {/* Avatar image */}
                     <div className="relative z-10 w-full h-full rounded-full overflow-hidden border-2 border-white/10 animate-float">
                       <img
                         src={profileImage}
@@ -183,7 +176,6 @@ const Index = () => {
                       />
                     </div>
                     
-                    {/* Particle effects */}
                     <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-primary rounded-full animate-float opacity-70" style={{ animationDelay: '0.5s' }}></div>
                     <div className="absolute -top-4 left-8 w-4 h-4 bg-accent rounded-full animate-float opacity-70" style={{ animationDelay: '1.2s' }}></div>
                     <div className="absolute top-1/4 -right-6 w-3 h-3 bg-white rounded-full animate-float opacity-50" style={{ animationDelay: '0.7s' }}></div>
