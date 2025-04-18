@@ -6,6 +6,7 @@ import {
   Phone, Linkedin, Code, Brush, Brain, Monitor, Zap,
   SlidersHorizontal, BookOpen, Rocket
 } from 'lucide-react';
+import { User } from '@/components/icons/User'; // Import the User component
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
