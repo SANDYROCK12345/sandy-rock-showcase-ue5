@@ -1,125 +1,167 @@
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 const ContactForm = () => {
-  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
-  
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
-        variant: "default",
-      });
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsSubmitted(true);
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: ''
       });
-    }, 1500);
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="glass-panel p-6 md:p-8 space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="text-white text-sm mb-1 block">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 bg-ue-dark/50 border border-white/10 rounded-md focus:border-ue-blue focus:outline-none focus:ring-1 focus:ring-ue-blue text-white transition-colors"
-            placeholder="Your name"
-          />
-        </div>
-        <div>
-          <label htmlFor="email" className="text-white text-sm mb-1 block">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 bg-ue-dark/50 border border-white/10 rounded-md focus:border-ue-blue focus:outline-none focus:ring-1 focus:ring-ue-blue text-white transition-colors"
-            placeholder="Your email"
-          />
-        </div>
-      </div>
-      
-      <div>
-        <label htmlFor="subject" className="text-white text-sm mb-1 block">
-          Subject
-        </label>
-        <input
-          type="text"
-          id="subject"
-          name="subject"
-          value={formData.subject}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 bg-ue-dark/50 border border-white/10 rounded-md focus:border-ue-blue focus:outline-none focus:ring-1 focus:ring-ue-blue text-white transition-colors"
-          placeholder="Subject of your message"
-        />
-      </div>
-      
-      <div>
-        <label htmlFor="message" className="text-white text-sm mb-1 block">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          rows={5}
-          className="w-full px-4 py-3 bg-ue-dark/50 border border-white/10 rounded-md focus:border-ue-blue focus:outline-none focus:ring-1 focus:ring-ue-blue text-white transition-colors resize-none"
-          placeholder="Your message"
-        />
-      </div>
-      
-      <button
-        type="submit"
-        className="btn-primary flex items-center gap-2 w-full justify-center"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Sending...' : (
-          <>
-            <span>Send Message</span>
-            <Send size={16} />
-          </>
-        )}
-      </button>
-    </form>
+    <div className="glass-card p-6 md:p-8">
+      {isSubmitted ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center py-12"
+        >
+          <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center mb-6">
+            <Send className="text-primary" size={24} />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
+          <p className="text-muted-foreground mb-6">
+            Thank you for reaching out. I'll get back to you as soon as possible.
+          </p>
+          <button
+            onClick={() => setIsSubmitted(false)}
+            className="button-outline"
+          >
+            Send Another Message
+          </button>
+        </motion.div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <h3 className="text-xl font-bold mb-6">Get In Touch</h3>
+          
+          {error && (
+            <div className="bg-destructive/10 text-destructive p-3 rounded-md mb-6">
+              {error}
+            </div>
+          )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-2">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-2 rounded-md border border-border/50 bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="Your name"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-2">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 rounded-md border border-border/50 bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                placeholder="Your email"
+              />
+            </div>
+          </div>
+          
+          <div className="mb-6">
+            <label htmlFor="subject" className="block text-sm font-medium mb-2">
+              Subject
+            </label>
+            <input
+              id="subject"
+              name="subject"
+              type="text"
+              required
+              value={formData.subject}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-md border border-border/50 bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+              placeholder="Subject of your message"
+            />
+          </div>
+          
+          <div className="mb-6">
+            <label htmlFor="message" className="block text-sm font-medium mb-2">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={5}
+              required
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-md border border-border/50 bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+              placeholder="Your message"
+            />
+          </div>
+          
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`button-primary w-full flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+          >
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sending...
+              </>
+            ) : (
+              <>
+                Send Message
+                <Send size={16} className="ml-2" />
+              </>
+            )}
+          </button>
+        </form>
+      )}
+    </div>
   );
 };
 

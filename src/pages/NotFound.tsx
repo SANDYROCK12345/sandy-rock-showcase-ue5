@@ -1,39 +1,50 @@
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Home } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
-import AnimatedSection from '@/components/AnimatedSection';
-import { useEffect } from "react";
 
 const NotFound = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
-    <div className="bg-ue-dark min-h-screen">
+    <>
       <Navbar />
       <ParticleBackground />
-
-      <section className="pt-32 pb-24 min-h-[70vh] flex items-center">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <AnimatedSection animation="fade-in-up" className="max-w-2xl mx-auto">
-            <h1 className="text-8xl font-bold text-ue-blue mb-6">404</h1>
-            <h2 className="text-3xl font-bold text-white mb-6">Page Not Found</h2>
-            <p className="text-ue-gray mb-8">
-              The page you are looking for might have been removed, had its name changed, 
-              or is temporarily unavailable.
+      
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="section-container text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-9xl font-bold gradient-heading mb-4">404</h1>
+            <h2 className="text-3xl font-bold mb-6">Page Not Found</h2>
+            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+              The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
             </p>
-            <Link to="/" className="btn-primary inline-flex">
-              Return to Home
-            </Link>
-          </AnimatedSection>
+            
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/" className="button-primary">
+                <Home size={16} className="mr-2" />
+                Back to Home
+              </Link>
+              
+              <button 
+                onClick={() => window.history.back()} 
+                className="button-outline"
+              >
+                <ArrowLeft size={16} className="mr-2" />
+                Go Back
+              </button>
+            </div>
+          </motion.div>
         </div>
-      </section>
-
+      </div>
+      
       <Footer />
-    </div>
+    </>
   );
 };
 

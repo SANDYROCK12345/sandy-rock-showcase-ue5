@@ -1,66 +1,116 @@
 
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail, Zap } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="relative border-t border-white/10 pt-16 pb-8">
-      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-transparent to-background -z-10"></div>
-      
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <div>
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="relative w-10 h-10 flex items-center justify-center bg-primary/20 rounded-lg group-hover:bg-primary/30 transition-colors duration-300">
-                <Zap className="w-6 h-6 text-accent" />
-                <div className="absolute inset-0 bg-primary/20 rounded-lg animate-pulse-glow group-hover:animate-none opacity-70"></div>
-              </div>
-              <span className="text-white font-orbitron font-bold text-xl">Sandy<span className="text-accent">Rock</span></span>
+    <footer className="border-t border-border/30 mt-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2">
+            <Link to="/" className="text-2xl font-syne font-bold">
+              <span className="gradient-heading">Alex Chen</span>
             </Link>
-            
-            <p className="text-white/60 mt-4 max-w-sm">
-              Unreal Engine 5 game developer specializing in interactive experiences and immersive worlds.
+            <p className="mt-4 text-muted-foreground">
+              Creative developer focused on building engaging digital experiences 
+              that combine technical excellence with beautiful design.
             </p>
-            
-            <div className="flex gap-4 mt-6">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/20 text-white hover:text-accent transition-colors">
-                <Github size={18} />
+            <div className="flex space-x-4 mt-6">
+              <a 
+                href="https://github.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="GitHub"
+              >
+                <Github size={20} />
               </a>
-              <a href="https://www.linkedin.com/in/sandy-rock-69705a328/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/20 text-white hover:text-accent transition-colors">
-                <Linkedin size={18} />
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Twitter"
+              >
+                <Twitter size={20} />
               </a>
-              <a href="mailto:rocksandy9422@gmail.com" className="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/20 text-white hover:text-accent transition-colors">
-                <Mail size={18} />
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
+              <a 
+                href="mailto:hello@example.com" 
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Email"
+              >
+                <Mail size={20} />
               </a>
             </div>
           </div>
           
           <div>
-            <h3 className="text-white font-orbitron text-xl mb-4">Quick Links</h3>
+            <h3 className="font-medium text-lg mb-4">Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-white/60 hover:text-accent transition-colors">Home</Link></li>
-              <li><Link to="/projects" className="text-white/60 hover:text-accent transition-colors">Projects</Link></li>
-              <li><Link to="/skills" className="text-white/60 hover:text-accent transition-colors">Skills</Link></li>
-              <li><Link to="/contact" className="text-white/60 hover:text-accent transition-colors">Contact</Link></li>
+              <li>
+                <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/projects" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Projects
+                </Link>
+              </li>
+              <li>
+                <Link to="/skills" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Skills
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-white font-orbitron text-xl mb-4">Contact Info</h3>
+            <h3 className="font-medium text-lg mb-4">Contact</h3>
             <ul className="space-y-2">
-              <li className="text-white/60">Sikar, Rajasthan, India</li>
-              <li><a href="mailto:rocksandy9422@gmail.com" className="text-white/60 hover:text-accent transition-colors">rocksandy9422@gmail.com</a></li>
-              <li><a href="tel:8058994052" className="text-white/60 hover:text-accent transition-colors">+91 8058994052</a></li>
+              <li className="text-muted-foreground">
+                New York, NY
+              </li>
+              <li>
+                <a href="mailto:hello@example.com" className="text-muted-foreground hover:text-foreground transition-colors">
+                  hello@example.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+1234567890" className="text-muted-foreground hover:text-foreground transition-colors">
+                  +1 (234) 567-890
+                </a>
+              </li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-white/10 pt-8 text-center">
-          <p className="text-white/40">
-            © {currentYear} Sandy Rock. All rights reserved.
+        <div className="border-t border-border/30 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Alex Chen. All rights reserved.
           </p>
+          <div className="flex space-x-6 mt-4 md:mt-0">
+            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

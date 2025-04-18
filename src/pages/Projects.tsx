@@ -1,113 +1,259 @@
 
-import { useEffect } from 'react';
-import { ChevronLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Filter, X } from 'lucide-react';
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
-import AnimatedSection from '@/components/AnimatedSection';
 import ProjectCard from '@/components/ProjectCard';
+import Section from '@/components/Section';
 
-// Extended projects data for dedicated page
+// Project data
 const projects = [
   {
-    id: 1,
-    title: "Dreamscape Adventure",
-    description: "A third-person adventure game with procedural world generation and advanced AI systems.",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "C++", "Blueprint"],
-    liveLink: "#",
-    githubLink: "#"
+    title: "E-commerce Dashboard",
+    description: "A comprehensive admin dashboard for an e-commerce platform with analytics, order management, and inventory tracking.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop&q=80",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Chart.js"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    featured: true,
+    category: "Web App"
   },
   {
-    id: 2,
-    title: "Cyber Nexus",
-    description: "A fast-paced first-person shooter with destructible environments and realistic physics.",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "C++", "Niagara"],
-    liveLink: "#",
-    githubLink: "#"
+    title: "Recipe Finder App",
+    description: "Mobile-responsive web app that helps users find recipes based on ingredients they have.",
+    image: "https://images.unsplash.com/photo-1495195129352-aeb325a55b65?w=800&h=500&fit=crop&q=80",
+    tags: ["React", "Context API", "CSS Modules", "Recipe API"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "Web App"
   },
   {
-    id: 3,
-    title: "Natural Wonders",
-    description: "An open-world exploration game showcasing Unreal Engine 5's Nanite and Lumen technologies.",
-    image: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "Blueprint", "Nanite"],
-    liveLink: "#",
-    githubLink: "#"
+    title: "Personal Finance Tracker",
+    description: "Secure personal finance application that helps users track expenses, income, and savings goals.",
+    image: "https://images.unsplash.com/photo-1579621970588-a35d0e7ab9b6?w=800&h=500&fit=crop&q=80",
+    tags: ["React", "Redux", "Express", "MongoDB"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "Web App"
   },
   {
-    id: 4,
-    title: "Quantum Break",
-    description: "A sci-fi puzzle game with innovative time-manipulation mechanics.",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "C++", "AI"],
-    liveLink: "#",
-    githubLink: "#"
+    title: "Portfolio Website",
+    description: "Modern portfolio website with animated transitions and responsive design.",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop&q=80",
+    tags: ["React", "Framer Motion", "Tailwind CSS"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "Website"
   },
   {
-    id: 5,
-    title: "Arctic Survival",
-    description: "A survival game set in a harsh arctic environment with realistic weather systems.",
-    image: "https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "Blueprint", "Physics"],
-    liveLink: "#",
-    githubLink: "#"
+    title: "Weather Application",
+    description: "Real-time weather application with location tracking and 7-day forecasts.",
+    image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop&q=80",
+    tags: ["React", "Weather API", "Geolocation"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "Web App"
   },
   {
-    id: 6,
-    title: "Urban Chaos",
-    description: "An open-world urban game with advanced crowd systems and destructible environments.",
-    image: "https://images.unsplash.com/photo-1468436385273-8abca6dfd8d3?w=800&h=500&fit=crop&q=80",
-    technologies: ["UE5", "C++", "Lumen"],
-    liveLink: "#",
-    githubLink: "#"
+    title: "Task Management System",
+    description: "Collaborative task management system with real-time updates and team workspaces.",
+    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=500&fit=crop&q=80",
+    tags: ["React", "Firebase", "Material UI"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    featured: true,
+    category: "Web App"
   },
+  {
+    title: "Fitness Tracking Mobile App",
+    description: "Mobile app for tracking workouts, nutrition, and fitness goals with progress visualizations.",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=500&fit=crop&q=80",
+    tags: ["React Native", "Redux", "Health API"],
+    githubUrl: "https://github.com",
+    category: "Mobile App"
+  },
+  {
+    title: "Restaurant Website",
+    description: "Elegant website for a high-end restaurant with online reservations and menu display.",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop&q=80",
+    tags: ["HTML", "CSS", "JavaScript", "PHP"],
+    liveUrl: "https://example.com",
+    category: "Website"
+  }
 ];
 
+// Get all unique tags
+const allTags = [...new Set(projects.flatMap(project => project.tags))];
+
+// Get all unique categories
+const categories = [...new Set(projects.map(project => project.category))];
+
 const Projects = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Filter projects based on selected tags, category, and search query
+  const filteredProjects = projects.filter(project => {
+    const matchesTags = selectedTags.length === 0 || 
+      selectedTags.some(tag => project.tags.includes(tag));
+    
+    const matchesCategory = !selectedCategory || project.category === selectedCategory;
+    
+    const matchesSearch = !searchQuery || 
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    return matchesTags && matchesCategory && matchesSearch;
+  });
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag) 
+        : [...prev, tag]
+    );
+  };
+
+  const clearFilters = () => {
+    setSelectedTags([]);
+    setSelectedCategory(null);
+    setSearchQuery('');
+  };
 
   return (
-    <div className="bg-ue-dark min-h-screen">
+    <>
       <Navbar />
       <ParticleBackground />
-
-      <section className="pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <AnimatedSection animation="fade-in-down" className="mb-2">
-            <Link to="/" className="inline-flex items-center gap-2 text-ue-gray hover:text-ue-blue transition-colors mb-6">
-              <ChevronLeft size={16} />
-              <span>Back to Home</span>
-            </Link>
-          </AnimatedSection>
-          
-          <AnimatedSection animation="fade-in-up" className="text-center mb-16">
-            <h1 className="section-title">My <span className="text-ue-blue">Projects</span></h1>
-            <p className="section-subtitle">
-              A showcase of my game development work using Unreal Engine 5 and related technologies
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <AnimatedSection 
-                key={project.id} 
-                animation="fade-in-up" 
-                delay={index * 100}
+      
+      <main className="pt-32">
+        <Section
+          title="My Projects"
+          subtitle="Here's a comprehensive showcase of my work across various technologies and industries."
+        >
+          {/* Search and Filters */}
+          <div className="mb-10">
+            <div className="flex flex-col md:flex-row gap-4 mb-6">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  placeholder="Search projects..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2 rounded-md border border-border/50 bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                />
+              </div>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="px-4 py-2 flex items-center gap-2 rounded-md border border-border/50 bg-background/50 hover:bg-secondary transition-colors"
+                >
+                  <Filter size={18} />
+                  <span>Filters</span>
+                </button>
+                
+                {(selectedTags.length > 0 || selectedCategory || searchQuery) && (
+                  <button
+                    onClick={clearFilters}
+                    className="px-4 py-2 flex items-center gap-2 rounded-md border border-border/50 bg-background/50 hover:bg-secondary transition-colors"
+                  >
+                    <X size={18} />
+                    <span>Clear</span>
+                  </button>
+                )}
+              </div>
+            </div>
+            
+            {/* Filter options */}
+            {showFilters && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="glass-card p-6 mb-6"
               >
-                <ProjectCard {...project} />
-              </AnimatedSection>
-            ))}
+                {/* Categories */}
+                <div className="mb-6">
+                  <h3 className="font-medium mb-3">Categories</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
+                        className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                          selectedCategory === category
+                            ? 'bg-primary text-white'
+                            : 'bg-secondary text-foreground hover:bg-primary/20'
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Tags */}
+                <div>
+                  <h3 className="font-medium mb-3">Technologies</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {allTags.map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => toggleTag(tag)}
+                        className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                          selectedTags.includes(tag)
+                            ? 'bg-primary text-white'
+                            : 'bg-secondary text-foreground hover:bg-primary/20'
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
-        </div>
-      </section>
-
+          
+          {/* Project Grid */}
+          {filteredProjects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filteredProjects.map((project, index) => (
+                <ProjectCard 
+                  key={index} 
+                  title={project.title}
+                  description={project.description}
+                  image={project.image}
+                  tags={project.tags}
+                  githubUrl={project.githubUrl}
+                  liveUrl={project.liveUrl}
+                  featured={project.featured}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <h3 className="text-xl font-bold mb-2">No projects found</h3>
+              <p className="text-muted-foreground mb-6">
+                Try adjusting your search or filter criteria.
+              </p>
+              <button
+                onClick={clearFilters}
+                className="button-outline"
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
+        </Section>
+      </main>
+      
       <Footer />
-    </div>
+    </>
   );
 };
 

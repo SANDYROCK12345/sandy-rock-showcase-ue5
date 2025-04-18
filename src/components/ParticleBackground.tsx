@@ -8,6 +8,7 @@ interface Particle {
   speedX: number;
   speedY: number;
   opacity: number;
+  color: string;
 }
 
 const ParticleBackground = () => {
@@ -22,32 +23,54 @@ const ParticleBackground = () => {
     
     // Set canvas to full window size
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const pixelRatio = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * pixelRatio;
+      canvas.height = window.innerHeight * pixelRatio;
+      ctx.scale(pixelRatio, pixelRatio);
+      
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      
+      // Recreate particles when resizing
+      initParticles();
     };
     
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     
     // Particle settings
-    const particleCount = 80;
-    const particles: Particle[] = [];
+    const particleCount = Math.min(100, Math.floor(window.innerWidth / 20));
+    let particles: Particle[] = [];
+    
+    // Color theme based on dark/light mode
+    const getColors = () => {
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      return isDarkMode 
+        ? ['rgba(97, 38, 255, 0.4)', 'rgba(66, 99, 235, 0.4)', 'rgba(127, 90, 240, 0.4)']
+        : ['rgba(97, 38, 255, 0.2)', 'rgba(66, 99, 235, 0.2)', 'rgba(127, 90, 240, 0.2)'];
+    };
     
     // Create particles
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 0.5,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.5 + 0.1
-      });
-    }
+    const initParticles = () => {
+      particles = [];
+      const colors = getColors();
+      
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          size: Math.random() * 3 + 1,
+          speedX: (Math.random() - 0.5) * 0.3,
+          speedY: (Math.random() - 0.5) * 0.3,
+          opacity: Math.random() * 0.4 + 0.1,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    };
     
     // Animation function
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       
       // Update and draw particles
       particles.forEach(particle => {
@@ -56,15 +79,15 @@ const ParticleBackground = () => {
         particle.y += particle.speedY;
         
         // Reset particles when they move off-screen
-        if (particle.x < 0) particle.x = canvas.width;
-        else if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        else if (particle.y > canvas.height) particle.y = 0;
+        if (particle.x < 0) particle.x = window.innerWidth;
+        else if (particle.x > window.innerWidth) particle.x = 0;
+        if (particle.y < 0) particle.y = window.innerHeight;
+        else if (particle.y > window.innerHeight) particle.y = 0;
         
         // Draw particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 168, 243, ${particle.opacity})`;
+        ctx.fillStyle = particle.color;
         ctx.fill();
       });
       
@@ -76,10 +99,14 @@ const ParticleBackground = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
           
           // Draw line if particles are close enough
-          if (distance < 100) {
+          if (distance < 120) {
+            const opacity = (1 - distance / 120) * 0.15;
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const strokeColor = isDarkMode ? `rgba(130, 80, 230, ${opacity})` : `rgba(130, 80, 230, ${opacity})`;
+            
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 168, 243, ${0.1 * (1 - distance / 100)})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = 0.6;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
@@ -90,15 +117,33 @@ const ParticleBackground = () => {
       requestAnimationFrame(animate);
     };
     
+    // Listen for dark mode changes
+    const colorObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          initParticles();
+        }
+      });
+    });
+    
+    colorObserver.observe(document.documentElement, { attributes: true });
+    
+    initParticles();
     animate();
     
     // Cleanup
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      colorObserver.disconnect();
     };
   }, []);
   
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 -z-10 w-full h-full bg-transparent opacity-20" />;
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="fixed top-0 left-0 -z-10 w-full h-full bg-transparent pointer-events-none"
+    />
+  );
 };
 
 export default ParticleBackground;

@@ -1,102 +1,111 @@
 
 import { useState } from 'react';
-import { ExternalLink, Github } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Github, ExternalLink, Bookmark } from 'lucide-react';
 
 interface ProjectCardProps {
   title: string;
   description: string;
   image: string;
-  technologies: string[];
-  liveLink?: string;
-  githubLink?: string;
+  tags: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  featured?: boolean;
 }
 
 const ProjectCard = ({ 
   title, 
   description, 
   image, 
-  technologies, 
-  liveLink, 
-  githubLink 
+  tags, 
+  githubUrl, 
+  liveUrl,
+  featured = false
 }: ProjectCardProps) => {
-  const [hovered, setHovered] = useState(false);
-
+  const [isHovered, setIsHovered] = useState(false);
+  
   return (
-    <div 
-      className="glass-panel overflow-hidden transition-all duration-500 h-full group"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <motion.div
+      className={`glass-card h-full transition-all duration-500 group ${featured ? 'md:col-span-2' : ''}`}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="relative overflow-hidden h-64">
+      <div className="relative overflow-hidden aspect-video">
+        {featured && (
+          <div className="absolute top-4 left-4 z-10 bg-primary text-white text-xs px-2 py-1 rounded-full flex items-center">
+            <Bookmark size={12} className="mr-1" />
+            <span>Featured</span>
+          </div>
+        )}
         <img 
           src={image} 
           alt={title} 
-          className={`w-full h-full object-cover transition-transform duration-700 ${
-            hovered ? 'scale-110' : 'scale-100'
-          }`}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className={`absolute inset-0 bg-gradient-to-t from-ue-dark/90 via-ue-dark/50 to-transparent transition-opacity duration-500 ${
-          hovered ? 'opacity-100' : 'opacity-70'
-        }`}></div>
-        
-        <div className="absolute bottom-0 left-0 w-full p-6 transform translate-y-2 transition-transform duration-500 group-hover:translate-y-0">
-          <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-          
-          <div className="flex flex-wrap gap-2 mb-4">
-            {technologies.map((tech, index) => (
-              <span 
-                key={index}
-                className="text-xs px-2 py-1 rounded-full bg-ue-blue/20 text-ue-blue font-medium"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-          
-          <p className={`text-ue-gray text-sm transition-all duration-500 line-clamp-2 ${
-            hovered ? 'opacity-100' : 'opacity-0'
-          }`}>
-            {description}
-          </p>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-80"></div>
       </div>
       
-      <div className={`p-6 transition-all duration-500 ${
-        hovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-      }`}>
-        <div className="flex justify-between items-center mt-2">
-          <div className="flex gap-4">
-            {githubLink && (
-              <a
-                href={githubLink}
+      <div className="p-6">
+        <h3 className="text-xl font-bold mb-2 font-syne">{title}</h3>
+        
+        <p className="text-muted-foreground mb-4 line-clamp-3">
+          {description}
+        </p>
+        
+        <div className="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag, index) => (
+            <span 
+              key={index}
+              className="text-xs px-2 py-1 bg-secondary text-foreground/80 rounded-full"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        
+        <div className="flex justify-between items-center mt-auto pt-4 border-t border-border/30">
+          <div className="flex space-x-3">
+            {githubUrl && (
+              <a 
+                href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-ue-gray hover:text-ue-blue transition-colors"
+                className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
+                aria-label="View Github repository"
               >
-                <Github size={16} />
-                <span className="text-sm">Code</span>
+                <Github size={16} className="mr-1" />
+                <span>Code</span>
               </a>
             )}
             
-            {liveLink && (
-              <a
-                href={liveLink}
+            {liveUrl && (
+              <a 
+                href={liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-ue-gray hover:text-ue-blue transition-colors"
+                className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
+                aria-label="View live project"
               >
-                <ExternalLink size={16} />
-                <span className="text-sm">Live Demo</span>
+                <ExternalLink size={16} className="mr-1" />
+                <span>Live</span>
               </a>
             )}
           </div>
           
-          <button className="text-xs px-3 py-1 rounded-md bg-ue-blue/10 text-ue-blue hover:bg-ue-blue/20 transition-colors">
-            View Details
-          </button>
+          <motion.button 
+            className="px-3 py-1 text-xs rounded-full text-primary bg-primary/10 hover:bg-primary/20 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Details
+          </motion.button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
