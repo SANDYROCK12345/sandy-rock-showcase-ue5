@@ -62,23 +62,6 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				},
-				ue: {
-					blue: '#00a8f3',
-					dark: '#0d1117',
-					gray: '#8b949e',
-					light: '#58a6ff',
-					accent: '#3ac4ff'
-				},
-				rog: {
-					red: '#ff0029',
-					dark: '#131315',
-					darker: '#0a0a0c',
-					gray: '#8c8c8c',
-					light: '#f5f5f5',
-					cyan: '#39ebff',
-					purple: '#a355ff',
-					glow: 'rgba(255, 0, 41, 0.6)'
 				}
 			},
 			borderRadius: {
@@ -115,56 +98,31 @@ export default {
 					'0%': { opacity: '0', transform: 'translateX(20px)' },
 					'100%': { opacity: '1', transform: 'translateX(0)' }
 				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-20px)' }
+				},
+				'slow-spin': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
 				'pulse-glow': {
 					'0%, 100%': { 
-						opacity: '1',
-						boxShadow: '0 0 10px 2px var(--shadow-color, rgba(255, 0, 41, 0.4))' 
+						opacity: '0.7',
+						boxShadow: '0 0 15px 5px rgba(126, 105, 255, 0.7)' 
 					},
 					'50%': { 
-						opacity: '0.8',
-						boxShadow: '0 0 15px 4px var(--shadow-color, rgba(255, 0, 41, 0.6))' 
+						opacity: '0.5',
+						boxShadow: '0 0 25px 8px rgba(126, 105, 255, 0.5)' 
 					}
 				},
-				'float': {
-					'0%, 100%': { 
-						transform: 'translateY(0)',
-					},
-					'50%': { 
-						transform: 'translateY(-20px)',
-					},
+				'animate-background': {
+					'0%': { backgroundPosition: '0% 0%' },
+					'100%': { backgroundPosition: '100% 100%' }
 				},
-				'particle-flow': {
-					'0%': { transform: 'translateY(0) translateX(0)' },
-					'50%': { transform: 'translateY(-20px) translateX(10px)' },
-					'100%': { transform: 'translateY(-40px) translateX(0)', opacity: '0' }
-				},
-				'glow-pulse': {
-					'0%, 100%': {
-						boxShadow: '0 0 5px rgba(255, 0, 41, 0.3), 0 0 10px rgba(255, 0, 41, 0.2), 0 0 15px rgba(255, 0, 41, 0.1)'
-					},
-					'50%': {
-						boxShadow: '0 0 10px rgba(255, 0, 41, 0.5), 0 0 20px rgba(255, 0, 41, 0.3), 0 0 30px rgba(255, 0, 41, 0.2)'
-					}
-				},
-				'text-glow': {
-					'0%, 100%': {
-						textShadow: '0 0 5px rgba(255, 0, 41, 0.5), 0 0 15px rgba(255, 0, 41, 0.3)'
-					},
-					'50%': {
-						textShadow: '0 0 10px rgba(255, 0, 41, 0.8), 0 0 25px rgba(255, 0, 41, 0.5)'
-					}
-				},
-				'flicker': {
-					'0%, 100%': { opacity: '1' },
-					'10%': { opacity: '0.9' },
-					'20%': { opacity: '1' },
-					'30%': { opacity: '0.9' },
-					'40%': { opacity: '1' },
-					'50%': { opacity: '0.95' },
-					'60%': { opacity: '1' },
-					'70%': { opacity: '0.9' },
-					'80%': { opacity: '1' },
-					'90%': { opacity: '0.95' }
+				'text-shimmer': {
+					'0%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' }
 				}
 			},
 			animation: {
@@ -175,17 +133,20 @@ export default {
 				'fade-in-down': 'fade-in-down 0.5s ease-out',
 				'fade-in-left': 'fade-in-left 0.5s ease-out',
 				'fade-in-right': 'fade-in-right 0.5s ease-out',
-				'pulse-glow': 'pulse-glow 2s infinite',
 				'float': 'float 6s ease-in-out infinite',
-				'particle-flow': 'particle-flow 3s ease-out infinite',
-				'glow-pulse': 'glow-pulse 2s infinite',
-				'text-glow': 'text-glow 2s infinite',
-				'flicker': 'flicker 3s infinite'
+				'slow-spin': 'slow-spin 12s linear infinite',
+				'pulse-glow': 'pulse-glow 3s infinite',
+				'animate-background': 'animate-background 15s infinite alternate',
+				'text-shimmer': 'text-shimmer 3s infinite'
 			},
 			fontFamily: {
-				inter: ['Inter', 'sans-serif'],
-				montserrat: ['Montserrat', 'sans-serif'],
-				rog: ['Montserrat', 'sans-serif'] // ROG typically uses a similar font to Montserrat
+				poppins: ['Poppins', 'sans-serif'],
+				orbitron: ['Orbitron', 'sans-serif']
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+				'mesh-pattern': "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.07l2.83-2.83 1.41 1.41L1.41 4.48H0V3.07zm20.76-2.83l2.83 2.83V4.48L20.76 1.41 20.76 0h1.41zm17.66 0l2.83 2.83V4.48L38.42 1.41 38.24 0h1.41zM20.76 36l2.83 2.83v1.41L20.76 37.41 20.76 36h1.41zm17.66 0l2.83 2.83v1.41L38.42 37.41 38.24 36h1.41z'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")"
 			}
 		}
 	},
