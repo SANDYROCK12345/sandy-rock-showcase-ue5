@@ -44,7 +44,7 @@ export default function MainLayout({
   if (horizontalScroll) {
     return (
       <div className="h-screen overflow-hidden bg-background">
-        <Navbar fixed />
+        <Navbar fixedNav={true} />
         
         <div
           ref={containerRef}

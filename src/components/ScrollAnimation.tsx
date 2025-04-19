@@ -1,7 +1,6 @@
 
 import React, { ReactNode } from 'react';
-import { motion, Variant } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, Variant, useInView } from 'framer-motion';
 
 type AnimationVariant = 'fadeIn' | 'slideUp' | 'slideRight' | 'slideLeft' | 'scale' | 'rotate' | 'flip';
 
@@ -59,11 +58,11 @@ const ScrollAnimation: React.FC<ScrollAnimationProps> = ({
 }) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once, amount: threshold });
-
-  const Component = motion[as as keyof typeof motion] || motion.div;
+  
+  const MotionComponent = motion[as as keyof typeof motion] || motion.div;
 
   return (
-    <Component
+    <MotionComponent
       ref={ref}
       className={className}
       initial="initial"
@@ -72,7 +71,7 @@ const ScrollAnimation: React.FC<ScrollAnimationProps> = ({
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </Component>
+    </MotionComponent>
   );
 };
 
