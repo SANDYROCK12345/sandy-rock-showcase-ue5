@@ -21,23 +21,6 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    // Set canvas to full window size
-    const resizeCanvas = () => {
-      const pixelRatio = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * pixelRatio;
-      canvas.height = window.innerHeight * pixelRatio;
-      ctx.scale(pixelRatio, pixelRatio);
-      
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      
-      // Recreate particles when resizing
-      initParticles();
-    };
-    
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    
     // Particle settings
     const particleCount = Math.min(100, Math.floor(window.innerWidth / 20));
     let particles: Particle[] = [];
@@ -50,7 +33,7 @@ const ParticleBackground = () => {
         : ['rgba(97, 38, 255, 0.2)', 'rgba(66, 99, 235, 0.2)', 'rgba(127, 90, 240, 0.2)'];
     };
     
-    // Create particles
+    // Create particles - define this function before it's called
     const initParticles = () => {
       particles = [];
       const colors = getColors();
@@ -67,6 +50,23 @@ const ParticleBackground = () => {
         });
       }
     };
+    
+    // Set canvas to full window size - now initParticles is defined before this is called
+    const resizeCanvas = () => {
+      const pixelRatio = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * pixelRatio;
+      canvas.height = window.innerHeight * pixelRatio;
+      ctx.scale(pixelRatio, pixelRatio);
+      
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      
+      // Now we can safely call initParticles
+      initParticles();
+    };
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // This will also call initParticles
     
     // Animation function
     const animate = () => {
@@ -128,7 +128,6 @@ const ParticleBackground = () => {
     
     colorObserver.observe(document.documentElement, { attributes: true });
     
-    initParticles();
     animate();
     
     // Cleanup
