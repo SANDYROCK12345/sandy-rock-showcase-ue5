@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,18 +7,18 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%;
-    --foreground: 224 71% 4%;
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
+    --popover-foreground: 222 47% 11%;
     --primary: 262 83% 58%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 224 71% 4%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 8% 46%;
+    --secondary: 220 16% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 220 16% 96%;
+    --muted-foreground: 215 16% 46%;
     --accent: 262 83% 58%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 84% 60%;
@@ -30,24 +30,24 @@
   }
   
   .dark {
-    --background: 224 71% 4%;
+    --background: 222 47% 11%;
     --foreground: 210 40% 98%;
-    --card: 224 71% 4%;
+    --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
-    --popover: 224 71% 4%;
+    --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
     --primary: 263 70% 50%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 215 27% 16%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 215 27% 16%;
-    --muted-foreground: 217 10% 64%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
     --accent: 263 70% 50%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 210 40% 98%;
-    --border: 215 27% 16%;
-    --input: 215 27% 16%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
     --ring: 263 70% 50%;
   }
 }
@@ -64,8 +64,8 @@
   body {
     @apply bg-background text-foreground font-inter;
     background-image: 
-      linear-gradient(to bottom right, rgba(var(--primary) / 0.05), transparent 50%),
-      linear-gradient(to top left, rgba(var(--accent) / 0.05), transparent 50%);
+      radial-gradient(circle at 100% 0%, rgba(var(--primary) / 0.1) 0%, transparent 25%),
+      radial-gradient(circle at 0% 100%, rgba(var(--accent) / 0.1) 0%, transparent 25%);
     background-attachment: fixed;
   }
 
@@ -108,20 +108,25 @@
     @apply bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent;
   }
 
-  .button-primary {
-    @apply px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition-all duration-300 text-sm font-medium;
+  .btn-primary {
+    @apply px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition-all duration-300 hover:-translate-y-1 font-medium uppercase tracking-wider;
   }
   
-  .button-outline {
-    @apply px-6 py-3 border border-primary/30 text-primary rounded-md hover:bg-primary/10 transition-all duration-300 text-sm font-medium;
+  .text-glow {
+    text-shadow: 0 0 10px rgba(var(--primary) / 0.5),
+                 0 0 20px rgba(var(--primary) / 0.3);
   }
 
+  .acrylic-panel {
+    @apply bg-black/10 backdrop-blur-lg border border-white/10 rounded-xl;
+  }
+  
   .card {
-    @apply bg-card rounded-lg border border-border/40 shadow-sm overflow-hidden;
+    @apply bg-card/90 backdrop-blur-md rounded-lg border border-border/40 shadow-sm overflow-hidden;
   }
 
   .glass-card {
-    @apply bg-white/80 dark:bg-black/20 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/10 shadow-lg overflow-hidden;
+    @apply bg-white/5 dark:bg-black/20 backdrop-blur-md rounded-xl border border-white/10 dark:border-white/5 shadow-lg overflow-hidden;
   }
   
   .nav-link {
