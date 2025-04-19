@@ -1,7 +1,7 @@
 
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Code, Palette, Globe, Server, ArrowRight, Download, Users } from 'lucide-react';
+import { Code, Palette, Globe, Server, ArrowRight, Download, Users, Github, Twitter, Linkedin } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';

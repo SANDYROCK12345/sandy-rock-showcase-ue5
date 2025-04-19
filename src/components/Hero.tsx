@@ -117,12 +117,14 @@ const Hero = () => {
         </motion.a>
       </div>
       
-      <style jsx>{`
+      <style>
+        {`
         @keyframes slideDown {
           0%, 100% { transform: translateY(-100%); }
           50% { transform: translateY(300%); }
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };
