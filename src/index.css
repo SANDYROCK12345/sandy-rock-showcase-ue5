@@ -159,13 +159,13 @@
   /* Button variants */
   .btn-glass {
     @apply glass-panel hover:glass-panel-elevated px-6 py-3 font-medium;
-    @apply text-foreground hover:text-foreground transition-all duration-400;
+    @apply text-foreground hover:text-foreground transition-all duration-300;
     @apply hover:scale-105 hover:-translate-y-1;
   }
   
   .btn-primary-glow {
     @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium;
-    @apply transition-all duration-400 hover:scale-105 hover:-translate-y-1;
+    @apply transition-all duration-300 hover:scale-105 hover:-translate-y-1;
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     box-shadow: 
       0 10px 40px hsla(var(--primary), 0.3),
@@ -181,7 +181,7 @@
   
   .btn-secondary-glow {
     @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-xl font-medium;
-    @apply transition-all duration-400 hover:scale-105 hover:-translate-y-1;
+    @apply transition-all duration-300 hover:scale-105 hover:-translate-y-1;
     background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
     box-shadow: 
       0 10px 40px hsla(var(--secondary), 0.3),
