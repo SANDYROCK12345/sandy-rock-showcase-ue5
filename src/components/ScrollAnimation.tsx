@@ -59,11 +59,8 @@ const ScrollAnimation: React.FC<ScrollAnimationProps> = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once, amount: threshold });
   
-  // Create the appropriate motion component based on the 'as' prop
-  const Component = motion[as as keyof typeof motion] || motion.div;
-  
   return (
-    <Component
+    <motion.div
       ref={ref}
       className={className}
       initial="initial"
@@ -72,7 +69,7 @@ const ScrollAnimation: React.FC<ScrollAnimationProps> = ({
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </Component>
+    </motion.div>
   );
 };
 
